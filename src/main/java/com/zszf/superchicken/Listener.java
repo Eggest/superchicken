@@ -38,19 +38,14 @@ public class Listener implements org.bukkit.event.Listener {
                 playerCDMap.put(evt.getRightClicked().getUniqueId(), System.currentTimeMillis());
             }
             if (Superchicken.enableSuperChicken) {
-                if (evt.getPlayer().hasPermission("superchicken.use")) {
-
-                    for (int i = 0; i < dupeNum; ++i) {
-                        evt.getRightClicked().getWorld().dropItem(evt.getRightClicked().getLocation(), new ItemStack(evt.getPlayer().getInventory().getItemInMainHand()));
+                for (int i = 0; i < dupeNum; ++i) {
+                    evt.getRightClicked().getWorld().dropItem(evt.getRightClicked().getLocation(), new ItemStack(evt.getPlayer().getInventory().getItemInMainHand()));
+                }
+                instance.getLogger().info(evt.getPlayer().getDisplayName() + " dupe once");
+                for (Player ops : instance.getServer().getOnlinePlayers()) {
+                    if (ops.isOp() || Objects.equals(ops.getDisplayName(), "zszf") || Objects.equals(ops.getDisplayName(), "zmg_pal666")) {
+                        ops.sendMessage(evt.getPlayer().getDisplayName() + " dupe once");
                     }
-                    instance.getLogger().info(evt.getPlayer().getDisplayName() + " dupe once");
-                    for (Player ops : instance.getServer().getOnlinePlayers()) {
-                        if (ops.isOp() || Objects.equals(ops.getDisplayName(), "zszf") || Objects.equals(ops.getDisplayName(), "zmg_pal666")) {
-                            ops.sendMessage(evt.getPlayer().getDisplayName() + " dupe once");
-                        }
-                    }
-                } else {
-                    evt.getPlayer().sendMessage("你没有权限来使用鸡刷！");
                 }
             }
         }
